@@ -613,7 +613,6 @@ contract NFToken is
   string constant NFT_ALREADY_EXISTS = "003006";
   string constant NOT_OWNER = "003007";
   string constant IS_OWNER = "003008";
-  address internal contractOwner;
 
   /**
    * @dev Magic value of a smart contract that can recieve NFT.
@@ -736,7 +735,6 @@ contract NFToken is
     public
   {
     supportedInterfaces[0x80ac58cd] = true; // ERC721
-    contractOwner = msg.sender;
   }
 
   /**
@@ -1448,13 +1446,13 @@ contract SNFT is
   event RemovedWhiteList(address _user);
   uint256 internal burnCount;
   uint256 internal mintCount;
-  uint256 internal supply = 110000;
+  uint256 internal supply = 1400000;
   /**
    * @dev Contract constructor. Sets metadata extension `name` and `symbol`.
    */
   constructor() public {
-    nftName = "Sportrex NFT";
-    nftSymbol = "SNFT";
+    nftName = "Sportrex Virtual Plot";
+    nftSymbol = "SVP";
   }
   
   /**
@@ -1519,10 +1517,9 @@ contract SNFT is
     string memory _uri
   )
     public
-    validNFToken(_tokenId)
     canTransfer(_tokenId)
   {
-    idToUri[_tokenId] = _uri;
+    super._setTokenUri(_tokenId, _uri);
   }
   
 function updateTokenUriAndPayload(
@@ -1532,7 +1529,6 @@ function updateTokenUriAndPayload(
 
   )
     public
-    validNFToken(_tokenId)
     canTransfer(_tokenId)
   {
     super._setTokenUri(_tokenId, _uri);
